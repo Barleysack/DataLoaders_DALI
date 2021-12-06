@@ -9,10 +9,7 @@ class DALIDataloader(DALIGenericIterator):
         super().__init__(pipelines=pipeline, size=size, auto_reset=auto_reset, output_map=output_map)
 
     def __next__(self):
-        if self._first_batch is not None:
-            batch = self._first_batch
-            self._first_batch = None
-            return batch
+        #it is not so fine to use first batch policy, it confuses typings
         data = super().__next__()[0]
         if self.onehot_label:
             return [data[self.output_map[0]], data[self.output_map[1]].squeeze().long()]
